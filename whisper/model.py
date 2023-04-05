@@ -180,7 +180,8 @@ class TextDecoder(nn.Module):
         super().__init__()
 
         self.token_embedding = nn.Embedding(n_vocab, n_state)
-        self.positional_embedding = nn.Linear(n_ctx, n_state)
+        self.positional_embedding = nn.Parameter(n_ctx, n_state)
+        nn.init.xavier_normal_(self.positional_embedding)
 
         self.blocks: Iterable[ResidualAttentionBlock] = nn.ModuleList(
             [
